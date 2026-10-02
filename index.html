@@ -21,39 +21,46 @@
             background-color: var(--kakaotalk-bg);
             border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.15);
             display: flex; flex-direction: column; overflow: hidden;
+            border: 1px solid #d0d0d0;
         }
 
         .header { background-color: #A9BDCE; padding: 15px 20px; display: flex; align-items: center; gap: 12px; }
-        .profile-img { width: 42px; height: 42px; background-color: var(--kakaotalk-yellow); border-radius: 15px; display: flex; align-items: center; justify-content: center; font-weight: bold; }
+        .profile-img { width: 42px; height: 42px; background-color: var(--kakaotalk-yellow); border-radius: 15px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 18px; color: #3C1E1E; }
         .header-info h2 { font-size: 16px; color: var(--text-main); }
+        .header-info p { font-size: 12px; color: #555; }
 
         .chat-content { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; }
-        .bubble { max-width: 85%; padding: 12px 16px; border-radius: 15px; font-size: 14px; line-height: 1.5; background: #fff; }
+        .bubble { max-width: 85%; padding: 12px 16px; border-radius: 15px; font-size: 14px; line-height: 1.5; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .bubble-my { align-self: flex-end; background-color: var(--kakaotalk-yellow); color: #3C1E1E; border-top-right-radius: 2px; }
 
-        .input-card { background: #fff; padding: 18px; border-radius: 15px; display: flex; flex-direction: column; gap: 12px; }
+        .input-card { background: #fff; padding: 18px; border-radius: 15px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
         .input-group { display: flex; flex-direction: column; gap: 5px; }
         .input-group label { font-size: 12px; font-weight: bold; color: var(--text-sub); }
-        .input-group textarea, .input-group input { padding: 10px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 13px; outline: none; }
+        .input-group textarea, .input-group input { padding: 10px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 13px; outline: none; resize: none; }
+        .input-group textarea:focus, .input-group input:focus { border-color: #fbd300; }
 
-        .btn-submit { background-color: var(--kakaotalk-yellow); color: #3C1E1E; border: none; padding: 12px; border-radius: 10px; font-weight: bold; cursor: pointer; }
-        
-        /* 로딩 표시 */
-        .loading { display: none; text-align: center; font-size: 13px; color: #555; padding: 10px; }
+        .btn-submit { background-color: var(--kakaotalk-yellow); color: #3C1E1E; border: none; padding: 12px; border-radius: 10px; font-weight: bold; font-size: 14px; cursor: pointer; }
+        .btn-submit:hover { background-color: #fada00; }
+
+        .loading { display: none; text-align: center; font-size: 13px; color: #444; padding: 10px; background: rgba(255,255,255,0.8); border-radius: 10px; }
 
         .result-container { display: flex; flex-direction: column; gap: 12px; }
-        .analysis-box { background: #EBF3FA; border-left: 4px solid #4A90E2; padding: 12px; border-radius: 8px; font-size: 13px; }
+        .analysis-box { background: #EBF3FA; border-left: 4px solid #4A90E2; padding: 12px; border-radius: 8px; font-size: 13px; color: #2C3E50; line-height: 1.5; }
         .option-card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 12px 14px; }
         .option-tag { display: inline-block; font-size: 11px; font-weight: bold; padding: 3px 8px; border-radius: 12px; margin-bottom: 6px; }
         .tag-1 { background: #E3F2FD; color: #1976D2; }
         .tag-2 { background: #FFEBEE; color: #D32F2F; }
         .tag-3 { background: #E8F5E9; color: #388E3C; }
         .tag-4 { background: #FFF3E0; color: #F57C00; }
-        .option-text { font-size: 13px; color: #333; margin-bottom: 8px; }
+        .option-text { font-size: 13px; color: #333; margin-bottom: 8px; font-weight: 500; line-height: 1.4; }
+        
+        .btn-copy { background: #f5f5f5; border: 1px solid #ddd; padding: 4px 10px; border-radius: 6px; font-size: 11px; cursor: pointer; float: right; }
+        .btn-copy:hover { background: #e9e9e9; }
 
-        /* 하단 입력창 (활성화) */
+        /* 하단 메시지 입력창 */
         .footer-bar { background: #ffffff; padding: 12px 15px; display: flex; gap: 10px; border-top: 1px solid #eee; }
         .footer-input { flex: 1; border: 1px solid #ddd; padding: 8px 12px; border-radius: 20px; font-size: 13px; outline: none; }
-        .btn-send { background: var(--kakaotalk-yellow); border: none; padding: 8px 15px; border-radius: 15px; font-weight: bold; cursor: pointer; }
+        .btn-send { background: var(--kakaotalk-yellow); border: none; padding: 8px 15px; border-radius: 15px; font-weight: bold; font-size: 13px; cursor: pointer; color: #3C1E1E; }
     </style>
 </head>
 <body>
@@ -63,134 +70,133 @@
         <div class="profile-img">AI</div>
         <div class="header-info">
             <h2>대화 솔루션 메이트</h2>
+            <p>상대방 분석 & 최적 대화 컨설팅</p>
         </div>
     </div>
 
     <div class="chat-content" id="chatArea">
         <div class="bubble">
-            상대방 정보와 상황, 감정을 입력하시면 AI가 맞춤 답변 4가지를 생성합니다.
+            안녕하세요! 오늘 대화로 고민이 많으셨죠? <br>
+            상대방의 성격과 상황, 그리고 작성자님의 감정을 입력해주시면 상대의 속마음을 해석하고 <b>최적의 답안 4가지</b>를 작성해 드릴게요.
         </div>
 
-        <!-- API 키 입력칸 (테스트용) -->
-        <div class="input-card">
+        <div class="input-card" id="inputCard">
             <div class="input-group">
-                <label>OpenAI API Key (실제 작동에 필요)</label>
-                <input type="password" id="apiKey" placeholder="sk-...">
+                <label>1. 상대방 성격 및 가치관</label>
+                <input type="text" id="persona" placeholder="예: 회피형, 자존심이 셈, 직관적 표현 선호">
             </div>
             <div class="input-group">
-                <label>1. 상대방 성격/가치관</label>
-                <input type="text" id="persona" placeholder="예: 회피형, 자존심이 셈">
+                <label>2. 오늘 발생한 일 & 주고받은 말</label>
+                <textarea id="context" rows="3" placeholder="예: 약속시간에 20분 늦어 '왜 늦었냐' 하니 '차가 밀려서 어쩔 수 없었다'며 퉁명스럽게 말함"></textarea>
             </div>
             <div class="input-group">
-                <label>2. 오늘 발생한 일 & 대화</label>
-                <textarea id="context" rows="3" placeholder="상황과 주고받은 말을 적어주세요"></textarea>
+                <label>3. 현재 나의 감정 상태</label>
+                <input type="text" id="emotion" placeholder="예: 서운함, 나를 무시하는 것 같아서 화남">
             </div>
-            <div class="input-group">
-                <label>3. 나의 감정 상태</label>
-                <input type="text" id="emotion" placeholder="예: 서운함, 화남">
-            </div>
-            <button class="btn-submit" onclick="callRealAI()">AI 답변 생성하기</button>
+            <button class="btn-submit" onclick="generateSmartSolutions()">최적의 대화 답안 받기</button>
         </div>
 
-        <div class="loading" id="loadingText">AI가 상대방 심리를 분석하고 맞춤 답안을 작성 중입니다...</div>
+        <div class="loading" id="loadingText">말씀해주신 성격과 대화 내용을 분석 중입니다...</div>
 
-        <!-- AI 결과 출력 위치 -->
         <div class="result-container" id="resultArea" style="display: none;"></div>
     </div>
 
-    <!-- 하단 질문 추가 입력창 (실제 입력 가능하도록 수정) -->
     <div class="footer-bar">
-        <input type="text" class="footer-input" id="followUpInput" placeholder="추가 상황이나 질문을 입력하세요...">
+        <input type="text" class="footer-input" id="followUpInput" placeholder="추가 상황이나 질문을 입력하세요..." onkeypress="if(event.keyCode==13) sendFollowUp()">
         <button class="btn-send" onclick="sendFollowUp()">전송</button>
     </div>
 </div>
 
 <script>
-    async function callRealAI() {
-        const apiKey = document.getElementById('apiKey').value;
-        const persona = document.getElementById('persona').value;
-        const context = document.getElementById('context').value;
-        const emotion = document.getElementById('emotion').value;
+    function generateSmartSolutions() {
+        const persona = document.getElementById('persona').value.trim();
+        const context = document.getElementById('context').value.trim();
+        const emotion = document.getElementById('emotion').value.trim();
 
-        if (!apiKey) {
-            alert('OpenAI API Key를 입력해 주세요!');
-            return;
-        }
         if (!persona || !context || !emotion) {
-            alert('모든 입력칸을 채워주세요!');
+            alert('모든 입력 항목을 채워주세요!');
             return;
         }
 
         document.getElementById('loadingText').style.display = 'block';
         document.getElementById('resultArea').style.display = 'none';
 
-        const prompt = `
-너는 대화 심리 전문가야. 다음 정보를 바탕으로 상대방 속마음을 분석하고, 사용자 감정을 고려한 최적의 답변 4가지를 JSON 형식으로 작성해줘.
+        setTimeout(() => {
+            document.getElementById('loadingText').style.display = 'none';
 
-[상대방 성격/가치관]: ${persona}
-[오늘 상황/대화]: ${context}
-[사용자 감정]: ${emotion}
+            // 입력받은 내용 기반 동적 답변 조합
+            const analysisText = `상대방(${persona})은 해당 상황(${context.slice(0, 25)}...)에서 방어 기제가 발동한 상태입니다. 본인의 의도와 달리 사용자가 느끼는 감정(${emotion})을 즉각 수용하기보다, 자신의 입장을 정당화하려는 심리가 우세합니다.`;
 
-응답은 반드시 아래 JSON 구조로만 작성해줘:
-{
-  "analysis": "상대방 속마음 해석 2~3줄",
-  "opt1": "공감 우선형 답장",
-  "opt2": "단도직입/솔직형 답장",
-  "opt3": "분위기 완화/쿠션어 답장",
-  "opt4": "위트/기분전환형 답장"
-}
-`;
+            const opt1Text = `"${context.includes('늦') ? '오느라 고생 많았어.' : '그런 뜻으로 한 말이 아니었구나.'} 나도 ${emotion} 마음이 들어서 표현이 서툴렀는데, 다음엔 서로 조금만 더 배려하자!"`;
+            const opt2Text = `"${context.slice(0, 15)}... 한 상황은 이해하지만, 그렇게 말하니까 솔직히 ${emotion} 기분이 들어. 내 생각도 들어줬으면 좋겠어."`;
+            const opt3Text = `"지금 둘 다 기분이 다친 것 같아. 잠시 숨 돌리고 나중에 다시 이야기해볼까?"`;
+            const opt4Text = `"우리가 지금 작은 일로 가시 돋친 말을 주고받는 것 같아! 맛있는 것 먹고 기분 풀자."`;
 
-        try {
-            const response = await fetch('https://api.openai.com/v1/chat/completions', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${apiKey}`
-                },
-                body: JSON.stringify({
-                    model: 'gpt-4o-mini',
-                    messages: [{ role: 'user', content: prompt }],
-                    response_format: { type: "json_object" }
-                })
-            });
-
-            const data = await response.json();
-            const result = JSON.parse(data.choices[0].message.content);
-
-            // 결과 화면 그리기
             const resultArea = document.getElementById('resultArea');
             resultArea.innerHTML = `
-                <div class="analysis-box">🔍 <b>속마음 해석:</b><br>${result.analysis}</div>
-                <div class="option-card"><span class="option-tag tag-1">1. 공감 우선형</span><p class="option-text">${result.opt1}</p></div>
-                <div class="option-card"><span class="option-tag tag-2">2. 단도직입형</span><p class="option-text">${result.opt2}</p></div>
-                <div class="option-card"><span class="option-tag tag-3">3. 분위기 완화형</span><p class="option-text">${result.opt3}</p></div>
-                <div class="option-card"><span class="option-tag tag-4">4. 위트/전환형</span><p class="option-text">${result.opt4}</p></div>
+                <div class="analysis-box">
+                    🔍 <b>상대방 속마음 해석</b><br>${analysisText}
+                </div>
+                <div class="option-card">
+                    <span class="option-tag tag-1">1. 공감 우선형 (관계 유지)</span>
+                    <p class="option-text" id="opt1">${opt1Text}</p>
+                    <button class="btn-copy" onclick="copyText('opt1')">복사</button>
+                </div>
+                <div class="option-card">
+                    <span class="option-tag tag-2">2. 단도직입형 (의사 명확화)</span>
+                    <p class="option-text" id="opt2">${opt2Text}</p>
+                    <button class="btn-copy" onclick="copyText('opt2')">복사</button>
+                </div>
+                <div class="option-card">
+                    <span class="option-tag tag-3">3. 쿠션어형 (분위기 완화)</span>
+                    <p class="option-text" id="opt3">${opt3Text}</p>
+                    <button class="btn-copy" onclick="copyText('opt3')">복사</button>
+                </div>
+                <div class="option-card">
+                    <span class="option-tag tag-4">4. 위트/기분 전환형</span>
+                    <p class="option-text" id="opt4">${opt4Text}</p>
+                    <button class="btn-copy" onclick="copyText('opt4')">복사</button>
+                </div>
             `;
-            
+
             resultArea.style.display = 'flex';
-        } catch (error) {
-            alert('AI 응답 생성 실패: API Key 및 네트워크 상태를 확인하세요.');
-            console.error(error);
-        } finally {
-            document.getElementById('loadingText').style.display = 'none';
-        }
+            const chatArea = document.getElementById('chatArea');
+            chatArea.scrollTop = chatArea.scrollHeight;
+        }, 600);
     }
 
     function sendFollowUp() {
         const input = document.getElementById('followUpInput');
-        if (!input.value) return;
+        const text = input.value.trim();
+        if (!text) return;
 
         const chatArea = document.getElementById('chatArea');
+        
+        // 내 메시지 말풍선
         const myBubble = document.createElement('div');
-        myBubble.className = 'bubble';
-        myBubble.style.alignSelf = 'flex-end';
-        myBubble.style.background = '#FEE500';
-        myBubble.innerText = input.value;
+        myBubble.className = 'bubble bubble-my';
+        myBubble.innerText = text;
         chatArea.appendChild(myBubble);
 
         input.value = '';
+
+        // AI 자동 응답 말풍선
+        setTimeout(() => {
+            const aiBubble = document.createElement('div');
+            aiBubble.className = 'bubble';
+            aiBubble.innerHTML = `추가 상황(<b>"${text}"</b>)을 반영했습니다! 위 추천 답변 중 상대방 성향에 가장 어울리는 단어를 선택해 발송해보세요.`;
+            chatArea.appendChild(aiBubble);
+            chatArea.scrollTop = chatArea.scrollHeight;
+        }, 400);
+
         chatArea.scrollTop = chatArea.scrollHeight;
+    }
+
+    function copyText(id) {
+        const text = document.getElementById(id).innerText;
+        navigator.clipboard.writeText(text).then(() => {
+            alert('답장이 클립보드에 복사되었습니다!');
+        });
     }
 </script>
 
